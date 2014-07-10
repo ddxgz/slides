@@ -143,7 +143,7 @@
 	    			  <script type="text/template">
 						##A Bigger Picture
 
-						![Alt text](resource/swift-1.png)
+						![Alt text](swift/swift-1.png)
 
 						- The Rings: mapping data to physical locations in the cluster
 						- Consistency processes: ensure objects appropriately stored in Swift, include replicator, updater, auditor 
@@ -159,7 +159,7 @@
 				<section>
 					<h2>Process</h2>
 					<p>
-					<a class="image" href="resource/process.png" target="_blank"><image width="100" height="160" src="resource/process.png"></image></a>
+					<a class="image" href="swift/process.png" target="_blank"><image width="100" height="160" src="swift/process.png"></image></a>
 					</p>
 
 					<ul>
@@ -245,7 +245,7 @@
 				<section>
 					<h2>Partition</h2>
 					<p>
-					<a class="image" href="resource/partition.png" target="_blank"><image width="550" height="350" src="resource/partition.png"></image></a>
+					<a class="image" href="swift/partition.png" target="_blank"><image width="550" height="350" src="swift/partition.png"></image></a>
 					</p>
 
 					<ul>
@@ -279,7 +279,7 @@
 						<li>Partition Assignment List，partition到device的指派, a list of lists</li>
 					</ul>
 
-<a class="image" href="resource/ringdata.png" target="_blank"><image width="150" height="150" align="down" src="resource/ringdata.png"></image></a>
+<a class="image" href="swift/ringdata.png" target="_blank"><image width="150" height="150" align="down" src="swift/ringdata.png"></image></a>
 
 					  <aside class="notes">
 							Oh hey, these are some notes.
@@ -316,7 +316,7 @@
 					<h2>Consistent Hashing</h2>
 
 
-<a class="image" href="resource/hashing.png" target="_blank"><image width="500" height="380" align="down" src="resource/hashing.png"></image></a>
+<a class="image" href="swift/hashing.png" target="_blank"><image width="500" height="380" align="down" src="swift/hashing.png"></image></a>
 
 					<p>					
 					
@@ -345,14 +345,14 @@
 					<h2>Storing</h2>
 
 
-					<a class="image" href="resource/store.png" target="_blank"><image width="120" height="150" src="resource/store.png"></image></a>
+					<a class="image" href="swift/store.png" target="_blank"><image width="120" height="150" src="swift/store.png"></image></a>
 
 						
-					<a class="image" href="resource/dir1.png" target="_blank"><image width="800" height="150" src="resource/dir1.png"></image></a>
+					<a class="image" href="swift/dir1.png" target="_blank"><image width="800" height="150" src="swift/dir1.png"></image></a>
 				
-					<a class="image" href="resource/dir3.png" target="_blank"><image width="800" height="100" align="down" src="resource/dir3.png"></image></a>
+					<a class="image" href="swift/dir3.png" target="_blank"><image width="800" height="100" align="down" src="swift/dir3.png"></image></a>
 
-					<a class="image" href="resource/dir4.png" target="_blank"><image width="600" height="300" align="down" src="resource/dir4.png"></image></a>
+					<a class="image" href="swift/dir4.png" target="_blank"><image width="600" height="300" align="down" src="swift/dir4.png"></image></a>
 					
 					  <aside class="notes">
 							Oh hey, these are some notes.
@@ -364,7 +364,7 @@
 					<h2>Building the Ring</h2>
 
 
-<a class="image" href="resource/ringbuild.png" target="_blank"><image width="300" height="180" src="resource/ringbuild.png"></image></a>
+<a class="image" href="swift/ringbuild.png" target="_blank"><image width="300" height="180" src="swift/ringbuild.png"></image></a>
 
 					<ol>
 						<li>Calculates the number of partitions to assign to each device based on the weight of the device. 
@@ -501,19 +501,19 @@
 
 				<section>
 					<h2>Auditor</h2>
-
+<br>
 					<ul>
 						<li>Walk through the local server checking the integrity of the objects, containers, and accounts
 						</li>
-
-						<li> If corruption is found, the file is quarantined(隔离), 
+<br>
+						<li> If corruption is found, the file will be isolated 
 
 						</li>
-
+<br>
 						<li>
-						 replication will replace the bad file from another replica.</li>
-
-						 <li>If other errors are found they are logged (for example, an object’s listing can’t be found on any container server it should be</li>
+						 Replicator will replace the bad file from another replica</li>
+<br>
+					
 
 					</ul>	
 									
@@ -525,38 +525,119 @@
 
 
 			<section>
-				<section data-markdown>					
-    			  <script type="text/template">
-					##New Features
+					<h2>New Features</h2>
+<br>
+					<ul>
+						<li><strong>Multiple object rings</strong> for different storage polices, such as different number of replicas, already implemented in v2.0
+						</li>
+<br>
+						<li> Erasure Codes, to save storage resource by CPU resource, in process
 
-					- **Multiple object rings** for different storage polices, such as different number of replicas, already implemented in v2.0
-					- Erasure Codes, to save storage resource by CPU resource, in process
+						</li>
+<br>
+						
 					
 
-				  </script>
-
-				  <aside class="notes">
-						Oh hey.
-				  </aside>
+					</ul>	
+									
+					<aside class="notes">						
+					</aside>
 				</section>
-			</section>
 
-			<section>
+
+					
+				<section>
+
+					<h2>Directory  Structure</h2>
+
+
+					
+					<a class="image" href="swift/dirstr.png" target="_blank"><image width="150" height="300" src="swift/dirstr.png"></image></a>
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+
+
+				<section>
+
+					<h2>Swift Start</h2>
+
+
+					<br>
+
+					<p>/bin/swift-init -> Manager -> Server -> wsgi/daemon </p>
+
+					<pre>
+						<code data-trim contenteditable>
+#实例化Manager,
+#Manager是直接管理各个servers的类,会初始化各个服务
+manager = Manager(servers, run_dir=options.run_dir)
+try:
+    status = manager.run_command(command, **options.__dict__)
+					    </code>
+					</pre>
+					
+					<a class="image" href="swift/start.png" target="_blank"><image width="500" height="200" src="swift/start.png"></image></a>
+
+					<a class="image" href="swift/commands.png" target="_blank"><image width="300" height="580" src="swift/commands.png"></image></a>
+					
+					
+					<ul>
+						<li></li>
+
+					</ul>
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+								<section>
+
+					<h2>Swift Start</h2>
+
+
+					<br>
+
+					<p></p>
+
+					<pre>
+						<code data-trim contenteditable></code>
+					</pre>
+					
+
+
+					<a class="image" href="swift/commands.png" target="_blank"><image width="300" height="580" src="swift/commands.png"></image></a>
+					
+					
+					<ul>
+						<li></li>
+
+					</ul>
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+
 				<section>
 
 					<h2>Processes</h2>
 
 
-
+					<br>
 
 					<ul>
-						<li>When rebuilding a ring, recalculates the desired partitions that each device wants</li>
+						<li>On process startup, each server calls its respective __init__ method. This sets up internal state from the config file and gets the server ready to handle requests</li>
 
 						
 
 					</ul>
 					
-					
+					<a class="image" href="swift/request.png" target="_blank"><image width="500" height="380" align="down" src="swift/request.png"></image></a>
 					
 					  <aside class="notes">
 							
@@ -571,7 +652,7 @@
 
 
 					<ul>
-						<li>W</li>
+						<li>When a request comes to the server, it flows through the WSGI “pipeline” through any middleware to the server’s __call__ method</li>
 
 						
 
@@ -609,13 +690,19 @@
 
 					<h2>API</h2>
 
-
+<br>
 
 
 					<ul>
-						<li>W</li>
+						<li>RESTful - Python’s standard WSGI model for implementing it’s REST API</li>
 
-						
+			<br>	
+									<li>pythonclient</li>
+
+			<br>
+									<li>jclouds</li>
+
+			<br>		
 
 					</ul>
 					
@@ -626,7 +713,7 @@
 					  </aside>
 				</section>
 					
-			</section>
+			
 
 
 
@@ -655,11 +742,7 @@
 					
 			</section>
 
-			<section>
-				
 
-					
-			</section>
 
 			<section>
 				<section>
@@ -686,7 +769,7 @@
 					
 			</section>
 
-			</section>
+	
 
 				<section data-markdown>					
     			  <script type="text/template">
@@ -1047,7 +1130,7 @@ function linkify( selector ) {
 					##Consistent Hashing
 
 
-					![Alt text](resource/hashing.png)      
+					![Alt text](swift/hashing.png)      
 
 					hash(path) = md5(path + per-cluster suffix)   
 				
