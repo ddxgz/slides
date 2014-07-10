@@ -51,13 +51,40 @@
 				</section>
 
 				<section>
+					<h2>Swift</h2>
+					<p><br>
+				Highly <strong>Available</strong>, distributed, <strong>eventually consistent</strong> object store<br><br>
+					</p>
+
+					<ul>
+						<li>结构对称，无单点故障，节点增减不影响数据可用性
+						</li>
+						<li>硬件通用性，不同硬件配置的节点，只需配置不同参数
+						</li>
+						<li>平面地址空间，没有路径
+						</li>
+						<li>Configurable number of replicas as far away as possible
+						</li>
+						<li>RESTful http API to store and retrieve data, every object has a URL
+						</li>
+						<li>Objects can have extensive metadata, which can be indexed and searched
+						</li>
+
+
+					</ul>
+
+					<aside class="notes">
+							
+					  </aside>
+				</section>
+
 					<section data-markdown>
 	    			  <script type="text/template">
 						##3 Categories of Storage
 
-						- Block Storage
-						- File Storage
-						- Object Storage
+						Block Storage -> File Storage -> Object Storage
+
+						Disk -> File System -> Object Storage System
 
 					  </script>
 
@@ -65,98 +92,34 @@
 							Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
 					  </aside>
 					</section>
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##对象优势
-						- 平面地址空间，无路径
-						- 数据可用性不会中断。相反，当一个RAID磁盘出现故障，系统需长时间来重建阵列。
-						- 扩展性
-						- 设计良好的对象存储集群几乎是完全对称的，每个节点都是独立的
-						- 硬件通用性，不同硬件配置的节点，只需配置如weight等参数				
-
-						也看具体应用
-
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
-				</section>
-
 
 				<section>
-					<section data-markdown>
-	    			  <script type="text/template">
-						##Compare with other storage systems 
+					<h2>Differences to Ceph Object Store</h2>
+					<p><br><br>
+						<br><br>
+					</p>
 
-						- Ceph			
-						- HDFS
-						•	All objects, or files, stored in Swift have a URL
-						•	Applications store and retrieve data in Swift via an industry-standard RESTful http API
-						•	Objects can have extensive metadata, which can be indexed and searched
-						•	All objects are stored with multiple copies and are replicated in as-unique-as-possible availability zones and/or regions
-						•	When adding or replacing hardware, data does not have to be migrated to a new storage system, i.e. there are no fork-lift upgrades
-						•	Failed nodes and drives can be swapped out while the cluster is running with no downtime. New nodes and drives can be added the same way.
+					<ul>
+						<li>Ceph also provides block and filesystem storage</li>
+						<li>chooses consistency and partition tolerance over availability</li>
+
+						<li><a href="http://blog.zhaw.ch/icclab/evaluating-the-performance-of-ceph-and-swift-for-object-storage-on-small-clusters">Evaluating the performance of Ceph and Swift for object storage on small clusters</a><br> --biased: different api, swift cluster may wasn't properly configured
+</li>
+
+					</ul>
 
 
-					  </script>
+					
 
-					  <aside class="notes">
-							Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					<aside class="notes">
+							
 					  </aside>
-					</section>
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##Ceph
-
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##HDFS
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
 				</section>
+
+			
+				
+
+
 
 			<section>
 				<section data-markdown>
@@ -325,6 +288,31 @@
 
 				<section>
 
+					<h2>Add or remove a device</h2>
+					<p>
+					
+					
+					 </p>
+					<ul>
+						<li>
+						</li>
+						
+						<li></li>
+
+						<li>s</li>
+					</ul>
+
+
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>
+
+		
+
+				<section>
+
 					<h2>Consistent Hashing</h2>
 
 
@@ -350,33 +338,6 @@
 							Oh hey, these are some notes.
 					  </aside>
 				</section>
-
-				<!--section data-markdown>
-	    			
-				 <script type="text/template">
-
-					##Consistent Hashing
-
-
-					![Alt text](resource/hashing.png)      
-
-					hash(path) = md5(path + per-cluster suffix)   
-				
-				    top 4 bytes -> top part_power bits -> the partition
-					
-
-					```python
-							part = struct.unpack_from('>I', md5('/account/container/object'))[0] \
-							>> self._part_shift
-
-					```
-				
-				</script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-				</section-->
 
 
 				<section>
@@ -405,14 +366,14 @@
 
 <a class="image" href="resource/ringbuild.png" target="_blank"><image width="300" height="180" src="resource/ringbuild.png"></image></a>
 
-					<ul>
+					<ol>
 						<li>Calculates the number of partitions to assign to each device based on the weight of the device. 
 						 For example, for a partition at the power of 20, the ring has 1,048,576 partitions. One thousand devices of equal weight will each want 1,048.576 partitions. </li>
 						
 						<li>Assign each partition replica to the device as <strong>far away</strong> as possible from other replicas</li>
 
 					
-					</ul>
+					</ol>
 					
 					
 					
@@ -423,26 +384,27 @@
 
 				<section>
 
-					<h2>Building the Ring</h2>
+					<h2>Rebuilding the Ring</h2>
 
+					<ol>
+						<li>Recalculates the desired partitions that each device wants</li>
 
+						<li>Gather partitions for reassignment, include 
 
-
-					<ul>
-						<li>When rebuilding a ring, recalculates the desired partitions that each device wants</li>
-
-						<li>Gather partitions for reassignment, include from removed devices, any that can be spread out for better durability, and random partitions from any devices that have more partitions than they need</li>
+							<ul><li>from removed devices</li>
+							<li>any that can be spread out for better durability</li>
+							<li>random partitions from devices that have more than they need</li></ul>
+						</li>
 
 						<li>Reassign the gathered partitions to devices by the similar method</li>
 
 						<li>No partition will be moved twice in a configurable amount of time</li>
 
-					</ul>
-					
+					</ol>			
 					
 					
 					  <aside class="notes">
-							For example, for a partition at the power of 20, the ring has 1,048,576 partitions. One thousand devices of equal weight will each want 1,048.576 partitions. 
+						
 					  </aside>
 				</section>
 
@@ -468,52 +430,97 @@
 				</section>
 
 
-				<section data-markdown>					
-    			  <script type="text/template">
-					##Replicator
+				<section>
+					<h2>Replicator</h2>
 
-					- To keep the system in a consistent state in the face of temporary error conditions like network outages or drive failures
-					- Compare local data with remote copy to ensure they all contain the latest version
-					- 
+					<p align="left">
+					To keep the system in a consistent state in the face of temporary error conditions like network outages or drive failures
+					</p>
+					
+	
+					<ol>
+						<li>Compare local data with remote copies to ensure they all contain an up-to-date version</li>
 
-				  </script>
+						<li> If the state is not consistent:
 
-				  <aside class="notes">
-						Oh hey.
-				  </aside>
+							<ul>
+							<li>For object replication, updating is just rsyncing files to the peer</li>
+							<li>Account and container replication push missing records over HTTP or rsync whole database files</li>							
+							</ul>
+
+						</li>
+
+
+
+					</ol>	
+
+					<p  align="left">Also ensures that data is removed from the system</p>
+									
+					<aside class="notes">		
+
+					by comparing content in hashes.pickle file
+
+					walk through all the contents from partitions on the whole file system 
+					- for each partition, issue a REPLICATE HTTP request to all the other zones responsible for the same partition
+
+					• The other zone responds with information about the local state of the partition. 
+
+					• That allows the replicator process to decide if the remote zone has an up-to-date version of the partition.
+					- In case of account and containers, it doesn't check at the partition level, but check each account\/container contained inside each partition.
+					- If something is not up-to-date, it will be pushed using rsync by the replicator process. 
+
+					. When an item (object, container, or account) is deleted, a tombstone is set as the latest version of the item. The replicator will see the tombstone and ensure that the item is removed from the entire system				
+					</aside>
 				</section>
 
+				<section>
+					<h2>Updater</h2>
 
-				<section data-markdown>					
-    			  <script type="text/template">
-					##Consistent processes
+					<p align="left">
+					Occasionally, container or account data <strong>can not be immediately updated</strong> during failures or high load 
+					</p>
+					
+					<ul>
+						<li>If an update fails, it is queued locally, the updater will process failed updates.</li>
 
-					- Replicator
-					- Updater
-					- Auditor
+						<li> For example:
 
-				  </script>
+							<ul>
+							<li>Suppose a new object is put in to the system when the container server is under load </li>
+							<li>The object will be immediately available for reads as soon as the proxy server responds to the client with success</li>
+							<li>The container server did not update the object listing, and so the update would be queued for a later update. </li>
+							</ul>
 
-				  <aside class="notes">
-						Oh hey.
-				  </aside>
+						</li>
+
+					</ul>	
+									
+					<aside class="notes">						
+					</aside>
 				</section>
 
+				<section>
+					<h2>Auditor</h2>
 
-				<section data-markdown>					
-    			  <script type="text/template">
-					##Consistent processes
+					<ul>
+						<li>Walk through the local server checking the integrity of the objects, containers, and accounts
+						</li>
 
-					- Replicator
-					- Updater
-					- Auditor
+						<li> If corruption is found, the file is quarantined(隔离), 
 
-				  </script>
+						</li>
 
-				  <aside class="notes">
-						Oh hey.
-				  </aside>
+						<li>
+						 replication will replace the bad file from another replica.</li>
+
+						 <li>If other errors are found they are logged (for example, an object’s listing can’t be found on any container server it should be</li>
+
+					</ul>	
+									
+					<aside class="notes">						
+					</aside>
 				</section>
+
 			</section>
 
 
@@ -522,8 +529,8 @@
     			  <script type="text/template">
 					##New Features
 
-					- In 2.0， allow deployers to configure **multiple object rings** and expose them to end users on a per-container basis.
-					- Erasure Codes, to save storage resource by CPU resource
+					- **Multiple object rings** for different storage polices, such as different number of replicas, already implemented in v2.0
+					- Erasure Codes, to save storage resource by CPU resource, in process
 					
 
 				  </script>
@@ -532,37 +539,160 @@
 						Oh hey.
 				  </aside>
 				</section>
+			</section>
+
+			<section>
+				<section>
+
+					<h2>Processes</h2>
 
 
-				<section data-markdown>					
-    			  <script type="text/template">
-					##
-				  </script>
 
-				  <aside class="notes">
-						Oh hey.
-				  </aside>
+
+					<ul>
+						<li>When rebuilding a ring, recalculates the desired partitions that each device wants</li>
+
+						
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
 				</section>
 
+				<section>
+
+					<h2>Filter</h2>
+
+
+
+
+					<ul>
+						<li>W</li>
+
+						
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>Middleware</h2>
+
+
+
+
+					<ul>
+						<li>W</li>
+
+						
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>API</h2>
+
+
+
+
+					<ul>
+						<li>W</li>
+
+						
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+					
 			</section>
 
 
+
+			<section>
+				<section>
+
+					<h2>Code</h2>
+
+
+
+
+					<ul>
+						<li>W</li>
+
+						
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+					
+			</section>
+
+			<section>
+				
+
+					
+			</section>
+
+			<section>
+				<section>
+
+					<h2>Installation</h2>
+
+
+
+
+					<ul>
+						<li>W</li>
+
+						
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+					
+			</section>
+
+			</section>
+
 				<section data-markdown>					
     			  <script type="text/template">
-					##code
+					#Thanks
 
-					```python
-					def __init__(self, app, conf):
-					self.app = app
-					self.conf = conf
-			        self.logger = get_logger(conf, log_route='tempauth')
-			        self.log_headers = config_true_value(conf.get('log_headers', 'f'))
-			        self.reseller_prefix = conf.get('reseller_prefix', 'AUTH').strip()
-			        if self.reseller_prefix and self.reseller_prefix[-1] != '_':
-			            self.reseller_prefix += '_'
-
-					```
-
+					###Q&A
 				  </script>
 
 				  <aside class="notes">
@@ -570,71 +700,32 @@
 				  </aside>
 				</section>
 
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#" class="navigate-down">down</a>.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
 
 				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
-					</p>
-				</section>
+					<h2>Updater</h2>
 
-				<section>
-					<h2>Point of View</h2>
 					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
 					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
 
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
+					<ol>
+						<li></li>
 
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
+						<li> 
+
+							<ul>
+							<li>from removed devices</li>
+							</ul>
+
+						</li>
+
+					</ol>	
+									
+					<aside class="notes">						
+					</aside>
 				</section>
+							
+    			 
+	
 
 				<section>
 					<h2>Fantastic Ordered List</h2>
@@ -645,22 +736,7 @@
 					</ol>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-
-						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  For those of you who like that sort of thing.
-						  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
+				
 
 				<section id="transitions">
 					<h2>Transition Styles</h2>
@@ -718,39 +794,8 @@ Reveal.addEventListener( 'customevent', function() {
 					</code></pre>
 				</section>
 
-				<section>
-					<section data-background="#007777">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Repeated Image Backgrounds</h2>
-						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-				</section>
-
-				<section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
-					<h2>Background Transitions</h2>
-					<p>
-						Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
-					</p>
-				</section>
-
-				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-					<h2>Background Transition Override</h2>
-					<p>
-						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-					</p>
-				</section>
+			
+					
 
 				<section>
 					<h2>Clever Quotes</h2>
@@ -823,12 +868,7 @@ function linkify( selector ) {
 					</section>
 				</section>
 
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-					</a>
-				</section>
+
 
 				<section>
 					<h2>Export to PDF</h2>
@@ -847,19 +887,8 @@ function linkify( selector ) {
 					</p>
 				</section>
 
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="http://slid.es">Try the online editor</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
 
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
+
 
 			</div>
 
@@ -873,6 +902,10 @@ function linkify( selector ) {
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
+
+				slideNumber: true,
+
+
 				controls: true,
 				progress: true,
 				history: true,
@@ -900,3 +933,136 @@ function linkify( selector ) {
 
 	</body>
 </html>
+
+
+	<!--section>
+					<h2>Differences to Other Storage Systems</h2>
+					<p><br><br>
+						<br><br>
+					</p>
+
+					<ul>
+					HDFS：
+						<li>主要用于做超大文件的数据处理</li>
+						<li>数据以chunk分布存储，一次写多次读，
+
+					</ul>
+
+
+					
+
+					<aside class="notes">
+							
+					  </aside>
+
+				<section>
+					<section data-markdown>
+	    			  <script type="text/template">
+						##Compare with other storage systems 
+
+						- Ceph			
+						- HDFS
+
+						•	All objects, or files, stored in Swift have a URL
+						•	Applications store and retrieve data in Swift via an industry-standard RESTful http API
+						•	Objects can have extensive metadata, which can be indexed and searched
+						•	All objects are stored with multiple copies and are replicated in as-unique-as-possible availability zones and/or regions
+						•	When adding or replacing hardware, data does not have to be migrated to a new storage system, i.e. there are no fork-lift upgrades
+						•	Failed nodes and drives can be swapped out while the cluster is running with no downtime. New nodes and drives can be added the same way.
+
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					  </aside>
+					</section>
+
+					<section data-markdown>
+	    			  <script type="text/template">
+						##Ceph
+
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+					</section>
+
+					<section data-markdown>
+	    			  <script type="text/template">
+						##HDFS
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+					</section>
+
+				</section>
+				</section-->
+					<!--section data-markdown>
+	    			  <script type="text/template">
+						
+##对象优势
+
+ a highly available, distributed, eventually consistent object store
+
+ 						- 平面地址空间，无路径
+						- 数据可用性不会中断。相反，当一个RAID磁盘出现故障，系统需长时间来重建阵列。
+						- 扩展性
+						- 设计良好的对象存储集群几乎是完全对称的，每个节点都是独立的
+						- 硬件通用性，不同硬件配置的节点，只需配置如weight等参数				
+
+						也看具体应用
+
+	 
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+					</section>
+
+
+					<section data-markdown>
+	    			  <script type="text/template">
+						##
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+					</section-->
+
+
+
+				<!--section data-markdown>
+	    			
+				 <script type="text/template">
+
+					##Consistent Hashing
+
+
+					![Alt text](resource/hashing.png)      
+
+					hash(path) = md5(path + per-cluster suffix)   
+				
+				    top 4 bytes -> top part_power bits -> the partition
+					
+
+					```python
+							part = struct.unpack_from('>I', md5('/account/container/object'))[0] \
+							>> self._part_shift
+
+					```
+				
+				</script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section-->
