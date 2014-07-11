@@ -326,12 +326,9 @@
 					
 					<p>top 4 bytes -> top part_power bits -> the partition</p>
 					
-					<pre>
-						<code data-trim contenteditable>
-							part = struct.unpack_from('>I', md5('/account/container/object'))[0] \
-							>> self._part_shift
-					    </code>
-					</pre>
+					<pre><code data-trim contenteditable>
+part = struct.unpack_from('>I', md5('/account/container/object'))[0] >> self._part_shift
+					    </code></pre>
 				
 					
 					  <aside class="notes">
@@ -371,7 +368,13 @@
 						 For example, for a partition at the power of 20, the ring has 1,048,576 partitions. One thousand devices of equal weight will each want 1,048.576 partitions. </li>
 						
 						<li>Assign each partition replica to the device as <strong>far away</strong> as possible from other replicas</li>
-
+							<pre><code data-trim contenteditable>
+swift-ring-builder object.builder create 20 3 1
+swift-ring-builder object.builder add r1z1-127.0.0.1:6010/sdb1 1
+swift-ring-builder object.builder add r1z2-127.0.0.1:6020/sdb2 1
+swift-ring-builder object.builder add r1z3-127.0.0.1:6030/sdb3 1
+swift-ring-builder object.builder add r1z4-127.0.0.1:6040/sdb4 1
+</code></pre>
 					
 					</ol>
 					
@@ -385,7 +388,7 @@
 				<section>
 
 					<h2>Rebuilding the Ring</h2>
-
+<a class="image" href="swift/ringbuild.png" target="_blank"><image width="300" height="180" src="swift/ringbuild.png"></image></a>
 					<ol>
 						<li>Recalculates the desired partitions that each device wants</li>
 
@@ -571,15 +574,11 @@
 
 					<p>/bin/swift-init -> Manager -> Server -> wsgi/daemon </p>
 
-					<pre>
-						<code data-trim contenteditable>
-#实例化Manager,
-#Manager是直接管理各个servers的类,会初始化各个服务
-manager = Manager(servers, run_dir=options.run_dir)
+					<pre>#实例化Manager, Manager是直接管理各个servers的类,会初始化各个服务<code data-trim contenteditable>
+						manager = Manager(servers, run_dir=options.run_dir)
 try:
     status = manager.run_command(command, **options.__dict__)
-					    </code>
-					</pre>
+					    </code></pre>
 					
 					<a class="image" href="swift/start.png" target="_blank"><image width="250" height="100" src="swift/start.png"></image></a>
 
@@ -658,7 +657,7 @@ try:
 					  </aside>
 				</section>
 
-								<section>
+				<section>
 
 					<h2>Processe</h2>
 
@@ -679,44 +678,42 @@ try:
 					  </aside>
 				</section>
 
-				<section>
 
-					<h2>Middleware</h2>
+				
+				
 
-
-
-
-					<ul>
-						<li>W</li>
-
-						
-
-					</ul>
-					
-					
-					
-					  <aside class="notes">
-							
-					  </aside>
-				</section>
 
 				<section>
 
 					<h2>API</h2>
-
-<br>
-
-
 					<ul>
-						<li>RESTful - Python’s standard WSGI model for implementing it’s REST API</li>
+						<li>RESTful: Python’s standard WSGI model for implementing it’s REST API<br>
+							
+							<pre>get token via v3 API using Curl:<code data-trim contenteditable>
+curl -i -H "Content-type:application/json" -d '
+{"auth":{
+  "identity":{
+   "methods":["password"],
+   "password":{
+    "user":{
+     "name":"demo",
+     "domain":{"id":"default"},
+     "password":"888013"}}}}}' 
+  http://127.0.0.1:5000/v3/auth/tokens</code></pre>
+</li>
 
-			<br>	
-									<li>pythonclient</li>
+				<li>Python-Swiftclient<br>
 
-			<br>
-									<li>jclouds</li>
+					<pre>upload object to container via auth v2:<code data-trim contenteditable>swift -V 2.0 -A http://****:5000/v2.0 -U demo:demo -K 888888 upload container object</code></pre>
 
-			<br>		
+
+									</li>
+
+									<li>jclouds: multi-cloud open source library for Java and Clojure
+										<ul>
+										<li>support 30 cloud stacks including Amazon, Azure, OpenStack</li>	
+
+					</ul></li>	
 
 					</ul>
 					
@@ -756,20 +753,62 @@ try:
 					
 			</section>
 
+				<section>
 
+					<h2>Extending</h2>
+
+
+
+
+					<ul>
+						
+
+<li>Middleware - Python WSGI Middleware:
+	<ul>
+						<li>can be used to “wrap” the request and response of a WSGI application (i.e. proxy-server, account-server, container-server, object-server)
+
+</li>
+<li>Swift uses middleware to add (sometimes optional) behaviors to its WSGI servers</li>
+
+						
+
+					</ul>
+</li>
+
+					<li>ZeroVM - Computing on-disk:
+							<ul>
+						<li> have implemented the integration with Swift
+</li>
+<li>code runs inside of object storage</li>
+
+						
+
+					</ul>
+</li>	
+
+					<li>...</li></ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
 
 			<section>
 				<section>
 
 					<h2>Installation</h2>
 
-
+<br>
 
 
 					<ul>
-						<li>W</li>
-
-						
+						<li>As a component installed with OpenStack</li>
+<br>
+						<li>Swift All In One (SAIO) for development: <br><a href="http://docs.openstack.org/developer/swift/development_saio.html">official instruction </a> for for setting up a VM that emulate running a four node Swift cluster</li>
+						<br>
+						<li>Standalone Swift Cluster: <br><a href="http://docs.openstack.org/developer/swift/development_saio.html">official instruction </a> for a Multiple Server Swift Installation in Ubuntu</li>
 
 					</ul>
 					
