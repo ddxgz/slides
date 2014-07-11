@@ -581,13 +581,12 @@ try:
 					    </code>
 					</pre>
 					
-					<a class="image" href="swift/start.png" target="_blank"><image width="500" height="200" src="swift/start.png"></image></a>
+					<a class="image" href="swift/start.png" target="_blank"><image width="250" height="100" src="swift/start.png"></image></a>
 
-					<a class="image" href="swift/commands.png" target="_blank"><image width="300" height="580" src="swift/commands.png"></image></a>
-					
-					
 					<ul>
-						<li></li>
+						<li>On process startup, each server calls its __init__ method to set up internal state from config file and get the server ready to handle requests</li>
+
+						
 
 					</ul>
 					  <aside class="notes">
@@ -604,19 +603,11 @@ try:
 
 					<p></p>
 
-					<pre>
-						<code data-trim contenteditable></code>
-					</pre>
 					
+					<a class="image" href="swift/serverclass.png" target="_blank"><image width="600" height="140" src="swift/serverclass.png"></image></a>
 
-
-					<a class="image" href="swift/commands.png" target="_blank"><image width="300" height="580" src="swift/commands.png"></image></a>
+					<a class="image" href="swift/commands.png" target="_blank"><image width="290" height="490" src="swift/commands.png"></image></a>
 					
-					
-					<ul>
-						<li></li>
-
-					</ul>
 					  <aside class="notes">
 							
 					  </aside>
@@ -625,19 +616,19 @@ try:
 
 				<section>
 
-					<h2>Processes</h2>
+					<h2>Processe</h2>
 
 
 					<br>
 
 					<ul>
-						<li>On process startup, each server calls its respective __init__ method. This sets up internal state from the config file and gets the server ready to handle requests</li>
+						<li>Client sends a request to Swift via the bind_port in proxy-server.conf file</li>
 
-						
+						<li>When a request comes to the server, it flows through the WSGI “pipeline” through any middleware to the server’s __call__ method</li>
 
 					</ul>
 					
-					<a class="image" href="swift/request.png" target="_blank"><image width="500" height="380" align="down" src="swift/request.png"></image></a>
+					<a class="image" href="swift/request.png" target="_blank"><image width="700" height="480" align="down" src="swift/request.png"></image></a>
 					
 					  <aside class="notes">
 							
@@ -648,17 +639,40 @@ try:
 
 					<h2>Filter</h2>
 
-
+<br>
 
 
 					<ul>
 						<li>When a request comes to the server, it flows through the WSGI “pipeline” through any middleware to the server’s __call__ method</li>
 
+						<li>Configure in proxy-server.conf</li>
+
+					</ul>
+
+					<br>
+<br>
+					<a class="image" href="swift/pipeline.png" target="_blank"><image width="800" height="80" align="down" src="swift/pipeline.png"></image></a>
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+								<section>
+
+					<h2>Processe</h2>
+
+
+					<br>
+
+					<ul>
+						<li></li>
+
 						
 
 					</ul>
 					
-					
+					<a class="image" href="swift/request.png" target="_blank"><image width="700" height="480" align="down" src="swift/request.png"></image></a>
 					
 					  <aside class="notes">
 							
