@@ -57,6 +57,34 @@
 					</p>
 
 					<ul>
+						<li>Symmetric structure，no SPoF，scaling-out without downtime
+						</li>
+						<li>Unreliable hardware，different hardware with different conf para
+						</li>
+						<li>Flat address space，no directory
+						</li>
+						<li>Configurable number of replicas as far away as possible
+						</li>
+						<li>RESTful http API to store and retrieve data, every object has a URL
+						</li>
+						<li>Objects can have extensive metadata, which can be indexed and searched
+						</li>
+
+
+					</ul>
+
+					<aside class="notes">
+							
+					  </aside>
+				</section>
+
+				<!--section>
+					<h2>Swift</h2>
+					<p><br>
+				Highly <strong>Available</strong>, distributed, <strong>eventually consistent</strong> object store<br><br>
+					</p>
+
+					<ul>
 						<li>结构对称，无单点故障，节点增减不影响数据可用性
 						</li>
 						<li>硬件通用性，不同硬件配置的节点，只需配置不同参数
@@ -76,9 +104,9 @@
 					<aside class="notes">
 							
 					  </aside>
-				</section>
+				</section-->
 
-					<section data-markdown>
+					<!--section data-markdown>
 	    			  <script type="text/template">
 						##3 Categories of Storage
 
@@ -91,17 +119,19 @@
 					  <aside class="notes">
 							Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
 					  </aside>
-					</section>
+					</section-->
 
 				<section>
-					<h2>Differences to Ceph Object Store</h2>
-					<p><br><br>
-						<br><br>
-					</p>
+					<h2>Differences to <br>Ceph Object Store</h2>
+					<br>
 
 					<ul>
-						<li>Ceph also provides block and filesystem storage</li>
-						<li>chooses consistency and partition tolerance over availability</li>
+						<li>Ceph: <ul>
+							<li>also provides block and file storage</li>
+							<li>chooses consistency over availability</li></ul>
+
+						<li>Swift: <ul><li>supports Multi Datacenter installation</li>
+										<li>more flexible middleware that can plug into</li></ul>
 
 						<li><a href="http://blog.zhaw.ch/icclab/evaluating-the-performance-of-ceph-and-swift-for-object-storage-on-small-clusters">Evaluating the performance of Ceph and Swift for object storage on small clusters</a><br> --biased: different api, swift cluster may wasn't properly configured
 </li>
@@ -163,7 +193,7 @@
 					</p>
 
 					<ul>
-						<li>Entry point for new requests is the `Application` class in `swift/proxy/server.py`.
+						<li>Entry point for new requests is the `Application.__call__()` in `swift/proxy/server.py`.
 						</li>
 						<li>Different controller is chosen dependent on the request</li>
 						<li>Look up to the specific ring, to find the location of data</li>
@@ -249,12 +279,12 @@
 					</p>
 
 					<ul>
-						<li>device的映射，一个或多个partition会对应于一个device
+						<li>A mapping of devices，1 or more partitions for 1 device
 						</li>
 						
 						<li>Number of partitions = 2^part_power</li>
 
-						<li>device的增减不会影响partition的总数，只需要改变它们之间的映射，这保证了存储结点不会因为设备的增减而剧烈抖动</li>
+						<li>Add or remove devices will not change the number of partitions，just change the mapping between them</li>
 					</ul>
 
 					<aside class="notes">
@@ -271,12 +301,12 @@
 					
 					The Ring Data structure consists of three top level fields: </p>
 					<ul>
-						<li>List of Devices，集群中设备的列表
+						<li>List of Devices，info of devices in the cluster
 						</li>
 						
-						<li>Partition Shift Value，计算hash的位移量</li>
+						<li>Partition Shift Value，when hashing</li>
 
-						<li>Partition Assignment List，partition到device的指派, a list of lists</li>
+						<li>Partition Assignment List，partitions assigned to devices, a list of lists</li>
 					</ul>
 
 <a class="image" href="swift/ringdata.png" target="_blank"><image width="150" height="150" align="down" src="swift/ringdata.png"></image></a>
@@ -286,28 +316,6 @@
 					  </aside>
 				</section>
 
-				<section>
-
-					<h2>Add or remove a device</h2>
-					<p>
-					
-					
-					 </p>
-					<ul>
-						<li>
-						</li>
-						
-						<li></li>
-
-						<li>s</li>
-					</ul>
-
-
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-				</section>
 
 		
 
@@ -327,7 +335,8 @@
 					<p>top 4 bytes -> top part_power bits -> the partition</p>
 					
 					<pre><code data-trim contenteditable>
-part = struct.unpack_from('>I', md5('/account/container/object'))[0] >> self._part_shift
+part = struct.unpack_from('>I', md5('/account/container/object'))[0] \
+    >> self._part_shift
 					    </code></pre>
 				
 					
@@ -574,7 +583,8 @@ swift-ring-builder object.builder add r1z4-127.0.0.1:6040/sdb4 1
 
 					<p>/bin/swift-init -> Manager -> Server -> wsgi/daemon </p>
 
-					<pre>#实例化Manager, Manager是直接管理各个servers的类,会初始化各个服务<code data-trim contenteditable>
+					<pre>#Instantiate Manager, Manager is the class manages each server class, 
+#will initialize every service<code data-trim contenteditable>
 						manager = Manager(servers, run_dir=options.run_dir)
 try:
     status = manager.run_command(command, **options.__dict__)
@@ -583,7 +593,7 @@ try:
 					<a class="image" href="swift/start.png" target="_blank"><image width="250" height="100" src="swift/start.png"></image></a>
 
 					<ul>
-						<li>On process startup, each server calls its __init__ method to set up internal state from config file and get the server ready to handle requests</li>
+						<li>On process startup, each server calls its __init__() method to set up internal state from config file and get the server ready to handle requests</li>
 
 						
 
