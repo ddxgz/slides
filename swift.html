@@ -674,12 +674,6 @@ try:
 
 					<br>
 
-					<ul>
-						<li></li>
-
-						
-
-					</ul>
 					
 					<a class="image" href="swift/request.png" target="_blank"><image width="700" height="480" align="down" src="swift/request.png"></image></a>
 					
@@ -697,7 +691,7 @@ try:
 
 					<h2>API</h2>
 					<ul>
-						<li>RESTful: Python’s standard WSGI model for implementing it’s REST API<br>
+						<li>RESTful: <small>present credential to auth service -> auth service returns a token and url for the account<br> -> use token to access data in the account</small><br>
 							
 							<pre>get token via v3 API using Curl:<code data-trim contenteditable>
 curl -i -H "Content-type:application/json" -d '
@@ -712,6 +706,9 @@ curl -i -H "Content-type:application/json" -d '
   http://127.0.0.1:5000/v3/auth/tokens</code></pre>
 </li>
 
+<pre>get object in container:<code data-trim contenteditable>
+curl -i $publicURL/container/object -X GET -H "X-Auth-Token: $token"</code></pre>
+
 				<li>Python-Swiftclient<br>
 
 					<pre>upload object to container via auth v2:<code data-trim contenteditable>swift -V 2.0 -A http://****:5000/v2.0 -U demo:demo -K 888888 upload container object</code></pre>
@@ -719,7 +716,7 @@ curl -i -H "Content-type:application/json" -d '
 
 									</li>
 
-									<li>jclouds: multi-cloud open source library for Java and Clojure
+									<li><a href="http://jclouds.apache.org/guides/openstack/#swift">jclouds</a>: multi-cloud open source library for Java and Clojure
 										<ul>
 										<li>support 30 cloud stacks including Amazon, Azure, OpenStack</li>	
 
@@ -738,30 +735,7 @@ curl -i -H "Content-type:application/json" -d '
 
 
 
-			<section>
-				<section>
 
-					<h2>Code</h2>
-
-
-
-
-					<ul>
-						<li>W</li>
-
-						
-
-					</ul>
-					
-					
-					
-					  <aside class="notes">
-							
-					  </aside>
-				</section>
-
-					
-			</section>
 
 				<section>
 
@@ -812,7 +786,7 @@ curl -i -H "Content-type:application/json" -d '
 
 
 					<ul>
-						<li>As a component installed with OpenStack</li>
+						<li>As a component installed with OpenStack via packstack or devstack</li>
 <br>
 						<li>Swift All In One (SAIO) for development: <br><a href="http://docs.openstack.org/developer/swift/development_saio.html">official instruction </a> for for setting up a VM that emulate running a four node Swift cluster</li>
 						<br>
