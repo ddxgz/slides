@@ -133,8 +133,8 @@
 						<li>Swift: <ul><li>supports Multi Datacenter installation</li>
 										<li>more flexible middleware that can plug into</li></ul>
 
-						<li><a href="http://blog.zhaw.ch/icclab/evaluating-the-performance-of-ceph-and-swift-for-object-storage-on-small-clusters">Evaluating the performance of Ceph and Swift for object storage on small clusters</a><br> --biased: different api, swift cluster may wasn't properly configured
-</li>
+						<!--li><a href="http://blog.zhaw.ch/icclab/evaluating-the-performance-of-ceph-and-swift-for-object-storage-on-small-clusters">Evaluating the performance of Ceph and Swift for object storage on small clusters</a><br> --biased: different api, swift cluster may wasn't properly configured
+</li-->
 
 					</ul>
 
@@ -154,7 +154,7 @@
 			<section>
 				<section data-markdown>
 	    			  <script type="text/template">
-						##Basically 2 parts:
+						##Basically 2 parts
 
 						- **Proxy**:     
 						exposes the swift public API to users and streams objects to and from the client upon request.
@@ -275,7 +275,7 @@
 				<section>
 					<h2>Partition</h2>
 					<p>
-					<a class="image" href="swift/partition.png" target="_blank"><image width="550" height="350" src="swift/partition.png"></image></a>
+					<a class="image" href="swift/hashing.png" target="_blank"><image width="550" height="350" src="swift/hashing.png"></image></a>
 					</p>
 
 					<ul>
@@ -296,7 +296,7 @@
 				<section>
 
 					<h2>The Ring Data</h2>
-					<p>
+					<p align="left">
 					
 					
 					The Ring Data structure consists of three top level fields: </p>
@@ -374,9 +374,9 @@ part = struct.unpack_from('>I', md5('/account/container/object'))[0] \
 
 					<ol>
 						<li>Calculates the number of partitions to assign to each device based on the weight of the device. 
-						 For example, for a partition at the power of 20, the ring has 1,048,576 partitions. One thousand devices of equal weight will each want 1,048.576 partitions. </li>
+						 For example, for a partition at the power of 20, the ring has 1,048,576 partitions. One thousand devices of equal weight will each want 1,048.576 partitions to wait for assigning.</li>
 						
-						<li>Assign each partition replica to the device as <strong>far away</strong> as possible from other replicas</li>
+						<li>Assign each partition to the devices sorted by "most wanted", while keeping replicas as <strong>far away</strong> as possible</li>
 							<pre><code data-trim contenteditable>
 swift-ring-builder object.builder create 20 3 1
 swift-ring-builder object.builder add r1z1-127.0.0.1:6010/sdb1 1
