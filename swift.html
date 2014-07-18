@@ -46,7 +46,7 @@
 					<h1>OpenStack Swift</h1>
 					<h3>Intro</h3>
 					<p>
-						<small>by <a href="http://www.github.com/ddxgz">彭聪</a> / <a href="http://ddxgz.github.io/slides/swift.html">ddxgz.github.io/slides/swift.html</a></small>
+						<small>by <a href="http://www.github.com/ddxgz">Cong Peng</a> / <a href="http://ddxgz.github.io/slides/swift.html">ddxgz.github.io/slides/swift.html</a> /July, 2014</small>  
 					</p>
 				</section>
 
@@ -78,48 +78,70 @@
 					  </aside>
 				</section>
 
-				<!--section>
-					<h2>Swift</h2>
-					<p><br>
-				Highly <strong>Available</strong>, distributed, <strong>eventually consistent</strong> object store<br><br>
-					</p>
+			<section>
+				<section>
+
+					<h2>Why Object Storage</h2>
+
+					<br>
+
 
 					<ul>
-						<li>结构对称，无单点故障，节点增减不影响数据可用性
-						</li>
-						<li>硬件通用性，不同硬件配置的节点，只需配置不同参数
-						</li>
-						<li>平面地址空间，没有路径
-						</li>
-						<li>Configurable number of replicas as far away as possible
-						</li>
-						<li>RESTful http API to store and retrieve data, every object has a URL
-						</li>
-						<li>Objects can have extensive metadata, which can be indexed and searched
-						</li>
+						<li>File:</li>
+					
+						<ul>
+						<li>basic metadata - hard to manage</li>
+						
+						<li>large tree dir structure </li>
+						</ul>
 
+						<li>Object:</li>
+					
+						<ul>
+						<li>rich metadata - apply eDiscovery and business intelligence</li>
+						
+						<li>container/object</li>
+						<li>scale out when needed - rapidly growing amount of unstructured data</li>
+						</ul>
 
 					</ul>
-
-					<aside class="notes">
+					
+					
+					
+					  <aside class="notes">
 							
 					  </aside>
-				</section-->
+				</section>
 
-					<!--section data-markdown>
-	    			  <script type="text/template">
-						##3 Categories of Storage
+				<section>
 
-						Block Storage -> File Storage -> Object Storage
+					<h2>Why Object Storage</h2>
 
-						Disk -> File System -> Object Storage System
+					
 
-					  </script>
-
+					<a class="image" href="swift/fileobject.png" target="_blank"><image width="750" height="600" align="down" src="swift/fileobject.png"></image></a>
+					
+					
+					
 					  <aside class="notes">
-							Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+							
 					  </aside>
-					</section-->
+				</section>
+
+				<section>
+
+					<h2>Why Object Storage</h2>
+
+				
+<a class="image" href="swift/fileobject2.png" target="_blank"><image width="750" height="600" align="down" src="swift/fileobject2.png"></image></a>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+			</section>
 
 				<section>
 					<h2>Differences to <br>Ceph Object Store</h2>
@@ -839,70 +861,7 @@ curl -i $publicURL/container/object -X GET -H "X-Auth-Token: $token"</code></pre
 				  </aside>
 				</section>
 
-			<section>
-				<section>
 
-					<h2>Why Object Storage</h2>
-
-					<br>
-
-
-					<ul>
-						<li>File:</li>
-					
-						<ul>
-						<li>basic metadata - hard to manage</li>
-						
-						<li>large tree dir structure </li>
-						</ul>
-
-						<li>Object:</li>
-					
-						<ul>
-						<li>rich metadata - apply eDiscovery and business intelligence</li>
-						
-						<li>container/object</li>
-						<li>scale out when needed - rapidly growing amount of unstructured data</li>
-						</ul>
-
-					</ul>
-					
-					
-					
-					  <aside class="notes">
-							
-					  </aside>
-				</section>
-
-				<section>
-
-					<h2>Why Object Storage</h2>
-
-					
-
-					<a class="image" href="swift/fileobject.png" target="_blank"><image width="750" height="600" align="down" src="swift/fileobject.png"></image></a>
-					
-					
-					
-					  <aside class="notes">
-							
-					  </aside>
-				</section>
-
-				<section>
-
-					<h2>Why Object Storage</h2>
-
-				
-<a class="image" href="swift/fileobject2.png" target="_blank"><image width="750" height="600" align="down" src="swift/fileobject2.png"></image></a>
-					
-					
-					
-					  <aside class="notes">
-							
-					  </aside>
-				</section>
-			</section>
 
 
 
@@ -950,136 +909,3 @@ curl -i $publicURL/container/object -X GET -H "X-Auth-Token: $token"</code></pre
 
 	</body>
 </html>
-
-
-	<!--section>
-					<h2>Differences to Other Storage Systems</h2>
-					<p><br><br>
-						<br><br>
-					</p>
-
-					<ul>
-					HDFS：
-						<li>主要用于做超大文件的数据处理</li>
-						<li>数据以chunk分布存储，一次写多次读，
-
-					</ul>
-
-
-					
-
-					<aside class="notes">
-							
-					  </aside>
-
-				<section>
-					<section data-markdown>
-	    			  <script type="text/template">
-						##Compare with other storage systems 
-
-						- Ceph			
-						- HDFS
-
-						•	All objects, or files, stored in Swift have a URL
-						•	Applications store and retrieve data in Swift via an industry-standard RESTful http API
-						•	Objects can have extensive metadata, which can be indexed and searched
-						•	All objects are stored with multiple copies and are replicated in as-unique-as-possible availability zones and/or regions
-						•	When adding or replacing hardware, data does not have to be migrated to a new storage system, i.e. there are no fork-lift upgrades
-						•	Failed nodes and drives can be swapped out while the cluster is running with no downtime. New nodes and drives can be added the same way.
-
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					  </aside>
-					</section>
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##Ceph
-
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##HDFS
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
-				</section>
-				</section-->
-					<!--section data-markdown>
-	    			  <script type="text/template">
-						
-##对象优势
-
- a highly available, distributed, eventually consistent object store
-
- 						- 平面地址空间，无路径
-						- 数据可用性不会中断。相反，当一个RAID磁盘出现故障，系统需长时间来重建阵列。
-						- 扩展性
-						- 设计良好的对象存储集群几乎是完全对称的，每个节点都是独立的
-						- 硬件通用性，不同硬件配置的节点，只需配置如weight等参数				
-
-						也看具体应用
-
-	 
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section>
-
-
-					<section data-markdown>
-	    			  <script type="text/template">
-						##
-
-					  </script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-					</section-->
-
-
-
-				<!--section data-markdown>
-	    			
-				 <script type="text/template">
-
-					##Consistent Hashing
-
-
-					![Alt text](swift/hashing.png)      
-
-					hash(path) = md5(path + per-cluster suffix)   
-				
-				    top 4 bytes -> top part_power bits -> the partition
-					
-
-					```python
-							part = struct.unpack_from('>I', md5('/account/container/object'))[0] \
-							>> self._part_shift
-
-					```
-				
-				</script>
-
-					  <aside class="notes">
-							Oh hey, these are some notes.
-					  </aside>
-				</section-->
