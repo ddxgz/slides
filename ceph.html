@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Swift Intro- Presentation powered by reveal.js</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Ceph </h1>
+					<h3>Intro</h3>
+					<p>
+						<small>by <a href="http://www.github.com/ddxgz">Cong Peng</a> / <a href="http://ddxgz.github.io/slides/ceph.html">ddxgz.github.io/slides/swift.html</a> /Sep, 2014</small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Ceph</h2>
+					<p><br>
+				Highly <strong>Available</strong>, distributed, <strong>eventually consistent</strong> object store<br><br>
+					</p>
+
+					<ul>
+						<li>Symmetric structure，no SPoF，scaling-out without downtime
+						</li>
+						<li>Unreliable hardware，different hardware with different conf para
+						</li>
+						<li>Flat address space，no directory
+						</li>
+						<li>Configurable number of replicas as far away as possible
+						</li>
+						<li>RESTful http API to store and retrieve data, every object has a URL
+						</li>
+						<li>Objects can have extensive metadata, which can be indexed and searched
+						</li>
+
+
+					</ul>
+
+					<aside class="notes">
+							
+					  </aside>
+				</section>
+
+                <section data-markdown>
+	    			  <script type="text/template">
+						##3 Categories of Storage
+
+						Block Storage -> File Storage -> Object Storage
+
+						Disk -> File System -> Object Storage System
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					  </aside>
+				</section>
+
+			<section>
+				<section>
+
+					<h2>Why Object Storage</h2>
+
+					<br>
+
+
+					<ul>
+						<li>File:</li>
+					
+						<ul>
+						<li>basic metadata - hard to manage</li>
+						
+						<li>large tree dir structure </li>
+						</ul>
+
+						<li>Object:</li>
+					
+						<ul>
+						<li>rich metadata - apply eDiscovery and business intelligence</li>
+						
+						<li>container/object</li>
+						<li>scale out when needed - rapidly growing amount of unstructured data</li>
+						</ul>
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>Why Object Storage</h2>
+
+					
+
+					<a class="image" href="swift/fileobject.png" target="_blank"><image width="750" height="600" align="down" src="swift/fileobject.png"></image></a>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>Why Object Storage</h2>
+
+				
+<a class="image" href="swift/fileobject2.png" target="_blank"><image width="750" height="600" align="down" src="swift/fileobject2.png"></image></a>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+			</section>
+
+				<section>
+					<h2>Differences to <br>Ceph Object Store</h2>
+					<br>
+
+					<ul>
+						<li>Ceph: <ul>
+							<li>also provides block and file storage</li>
+							<li>chooses consistency over availability</li></ul>
+
+						<li>Swift: <ul><li>supports Multi Datacenter installation</li>
+										<li>more flexible middleware that can plug into</li></ul>
+
+						<!--li><a href="http://blog.zhaw.ch/icclab/evaluating-the-performance-of-ceph-and-swift-for-object-storage-on-small-clusters">Evaluating the performance of Ceph and Swift for object storage on small clusters</a><br> --biased: different api, swift cluster may wasn't properly configured
+</li-->
+
+					</ul>
+
+
+					
+
+					<aside class="notes">
+							
+					  </aside>
+				</section>
+
+			
+				
+
+
+
+			<section>
+				<section data-markdown>
+	    			  <script type="text/template">
+						##Basically 2 parts
+
+						- **Proxy**:     
+						exposes the swift public API to users and streams objects to and from the client upon request.
+						- **Storage Nodes**:      
+						handle storage, replication, and management of ojects, containers, and accounts.
+
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>			
+
+				<section data-markdown>
+	    			  <script type="text/template">
+						##A Bigger Picture
+
+						![Alt text](swift/swift-1.png)
+
+						- The Rings: mapping data to physical locations in the cluster
+						- Consistency processes: ensure objects appropriately stored in Swift, include replicator, updater, auditor 
+
+					  </script>
+
+					  <aside class="notes">
+						- Account and Container server: handles container and objects listing
+						- Object server: store, retrieve, and delete objects
+					  </aside>
+				</section>
+
+				<section>
+					<h2>Process</h2>
+					<p>
+					<a class="image" href="swift/process.png" target="_blank"><image width="100" height="160" src="swift/process.png"></image></a>
+					</p>
+
+					<ul>
+						<li>Entry point for new requests is the `Application.__call__()` in `swift/proxy/server.py`.
+						</li>
+						<li>Different controller is chosen dependent on the request</li>
+						<li>Look up to the specific ring, to find the location of data</li>
+
+					</ul>
+
+					<aside class="notes">
+							Web服务器网关接口（Python Web Server Gateway Interface，缩写为WSGI)是Python应用程序或框架和Web服务器之间的一种接口
+					  </aside>
+				</section>
+
+
+				<section data-markdown>
+	    			  <script type="text/template">
+						##Proxy Server
+						- **Shared\-nothing** architecture, can be scaled as needed
+						- Objects are streamed between proxy server and client directly, **no buffering** is enabled
+						- If one of the primary storage nodes is **unavailable**, the proxy will choose an appropriate hand-off node to send the request to
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>
+
+				<section data-markdown>
+	    			  <script type="text/template">
+						##Object Server
+
+						- Responsible for the actual storage of objects on the drives of it’s node
+						- Objects are stored as binary files on the drive 
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>
+
+				<section data-markdown>
+	    			  <script type="text/template">
+						##Container Server
+						- Handles requests regarding container metadata and the list of objects within each container
+						- Container information is stored as SQLite databases
+						- Uses the ring to locate the account to update
+
+						
+						##Account Server 
+						- Account server is similar to the container server, but handles container listings
+
+					  </script>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>
+
+			</section>
+
+
+			<section>
+				<section data-markdown>
+	    			  <script type="text/template">
+						##The Rings
+
+						- a mapping between the names of entities stored on disk and their physical location.
+						- 3 rings to store 3 kind of things (accounts, containers and objects). 
+						- Each ring works in the same way, for a given account, container, or object name, the ring returns information on its physical location within storage nodes
+
+					  </script>
+
+					  <aside class="notes">
+							Data is distributed over a set of machines, to keep track of where they reside. 
+							Swift does this by maintaining internal data structures called “Ring”.
+					  </aside>
+				</section>
+
+				<section>
+					<h2>Partition</h2>
+					<p>
+					<a class="image" href="swift/hashing.png" target="_blank"><image width=width="500" height="380" src="swift/hashing.png"></image></a>
+					</p>
+
+					<ul>
+						<li>A mapping of devices，1 or more partitions for 1 device
+						</li>
+						
+						<li>Number of partitions = 2^part_power</li>
+
+						<li>Add or remove devices will not change the number of partitions，just change the mapping between them</li>
+					</ul>
+
+					<aside class="notes">
+						因此，为了将来的扩展，partition的数量需要设定大一些
+					</aside>
+				</section>
+
+
+				<section>
+
+					<h2>The Ring Data</h2>
+					<p align="left">
+					
+					
+					The Ring Data structure consists of three top level fields: </p>
+					<ul>
+						<li>List of Devices，info of devices in the cluster
+						</li>
+						
+						<li>Partition Shift Value，when hashing</li>
+
+						<li>Partition Assignment List，partitions assigned to devices, a list of lists</li>
+					</ul>
+
+<a class="image" href="swift/ringdata.png" target="_blank"><image width="150" height="150" align="down" src="swift/ringdata.png"></image></a>
+
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>
+
+
+		
+
+				<section>
+
+					<h2>Consistent Hashing</h2>
+
+
+<a class="image" href="swift/hashing.png" target="_blank"><image width="500" height="380" align="down" src="swift/hashing.png"></image></a>
+
+					<p>					
+					
+					hash(path) = md5(path + per-cluster suffix) 
+					</p>
+					
+					<p>top 4 bytes -> top part_power bits -> the partition</p>
+					
+					<pre><code data-trim contenteditable>
+part = struct.unpack_from('>I', md5('/account/container/object'))[0] \
+    >> self._part_shift
+					    </code></pre>
+				
+					
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>
+
+
+				<section>
+
+					<h2>Storing</h2>
+
+
+					<a class="image" href="swift/store.png" target="_blank"><image width="120" height="150" src="swift/store.png"></image></a>
+
+						
+					<a class="image" href="swift/dir1.png" target="_blank"><image width="800" height="150" src="swift/dir1.png"></image></a>
+				
+					<a class="image" href="swift/dir3.png" target="_blank"><image width="800" height="100" align="down" src="swift/dir3.png"></image></a>
+
+					<a class="image" href="swift/dir4.png" target="_blank"><image width="600" height="300" align="down" src="swift/dir4.png"></image></a>
+					
+					  <aside class="notes">
+							Oh hey, these are some notes.
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>Building the Ring</h2>
+
+
+<a class="image" href="swift/ringbuild.png" target="_blank"><image width="300" height="180" src="swift/ringbuild.png"></image></a>
+
+					<ol>
+						<li>Calculates the number of partitions to assign to each device based on the weight of the device. 
+						 For example, for a partition at the power of 20, the ring has 1,048,576 partitions. One thousand devices of equal weight will each want 1,048.576 partitions to wait for assigning.</li>
+						
+						<li>Assign each partition to the devices sorted by "most wanted", while keeping replicas as <strong>far away</strong> as possible</li>
+							<pre><code data-trim contenteditable>
+swift-ring-builder object.builder create 20 3 1
+swift-ring-builder object.builder add r1z1-127.0.0.1:6010/sdb1 1
+swift-ring-builder object.builder add r1z2-127.0.0.1:6020/sdb2 1
+swift-ring-builder object.builder add r1z3-127.0.0.1:6030/sdb3 1
+swift-ring-builder object.builder add r1z4-127.0.0.1:6040/sdb4 1
+</code></pre>
+					
+					</ol>
+					
+					
+					
+					  <aside class="notes">
+							For example, for a partition at the power of 20, the ring has 1,048,576 partitions. One thousand devices of equal weight will each want 1,048.576 partitions. 
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>Rebuilding the Ring</h2>
+<a class="image" href="swift/ringbuild.png" target="_blank"><image width="300" height="180" src="swift/ringbuild.png"></image></a>
+					<ol>
+						<li>Recalculates the desired partitions that each device wants</li>
+
+						<li>Gather partitions for reassignment, include 
+
+							<ul><li>from removed devices</li>
+							<li>any that can be spread out for better durability</li>
+							<li>random partitions from devices that have more than they need</li></ul>
+						</li>
+
+						<li>Reassign the gathered partitions to devices by the similar method</li>
+
+						<li>No partition will be moved twice in a configurable amount of time</li>
+
+					</ol>			
+					
+					
+					  <aside class="notes">
+						
+					  </aside>
+				</section>
+
+					
+			</section>
+
+
+
+			<section>
+				<section data-markdown>					
+    			  <script type="text/template">
+					##Consistent processes
+
+					- Replicator
+					- Updater
+					- Auditor
+
+				  </script>
+
+				  <aside class="notes">
+						Oh hey.
+				  </aside>
+				</section>
+
+
+				<section>
+					<h2>Replicator</h2>
+
+					<p align="left">
+					To keep the system in a consistent state in the face of temporary error conditions like network outages or drive failures
+					</p>
+					
+	
+					<ol>
+						<li>Compare local data with remote copies to ensure they all contain an up-to-date version</li>
+
+						<li> If the state is not consistent:
+
+							<ul>
+							<li>For object replication, updating is just rsyncing files to the peer</li>
+							<li>Account and container replication push missing records over HTTP or rsync whole database files</li>							
+							</ul>
+
+						</li>
+
+
+
+					</ol>	
+
+					<p  align="left">Also ensures that data is removed from the system</p>
+									
+					<aside class="notes">		
+
+					by comparing content in hashes.pickle file
+
+					walk through all the contents from partitions on the whole file system 
+					- for each partition, issue a REPLICATE HTTP request to all the other zones responsible for the same partition
+
+					• The other zone responds with information about the local state of the partition. 
+
+					• That allows the replicator process to decide if the remote zone has an up-to-date version of the partition.
+					- In case of account and containers, it doesn't check at the partition level, but check each account\/container contained inside each partition.
+					- If something is not up-to-date, it will be pushed using rsync by the replicator process. 
+
+					. When an item (object, container, or account) is deleted, a tombstone is set as the latest version of the item. The replicator will see the tombstone and ensure that the item is removed from the entire system				
+					</aside>
+				</section>
+
+				<section>
+					<h2>Updater</h2>
+
+					<p align="left">
+					Occasionally, container or account data <strong>can not be immediately updated</strong> during failures or high load 
+					</p>
+					
+					<ul>
+						<li>If an update fails, it is queued locally, the updater will process failed updates.</li>
+
+						<li> For example:
+
+							<ul>
+							<li>Suppose a new object is put in to the system when the container server is under load </li>
+							<li>The object will be immediately available for reads as soon as the proxy server responds to the client with success</li>
+							<li>The container server did not update the object listing, and so the update would be queued for a later update. </li>
+							</ul>
+
+						</li>
+
+					</ul>	
+									
+					<aside class="notes">						
+					</aside>
+				</section>
+
+				<section>
+					<h2>Auditor</h2>
+<br>
+					<ul>
+						<li>Walk through the local server checking the integrity of the objects, containers, and accounts
+						</li>
+<br>
+						<li> If corruption is found, the file will be isolated 
+
+						</li>
+<br>
+						<li>
+						 Replicator will replace the bad file from another replica</li>
+<br>
+					
+
+					</ul>	
+									
+					<aside class="notes">						
+					</aside>
+				</section>
+
+			</section>
+
+
+			<section>
+					<h2>New Features</h2>
+<br>
+					<ul>
+						<li><strong>Multiple object rings</strong> for different storage polices, such as different number of replicas, already implemented in v2.0
+						</li>
+<br>
+						<li> Erasure Codes, to save storage resource by CPU resource, in process
+
+						</li>
+<br>
+						
+					
+
+					</ul>	
+									
+					<aside class="notes">						
+					</aside>
+				</section>
+
+
+					
+				<section>
+
+					<h2>Directory  Structure</h2>
+
+
+					
+					<a class="image" href="swift/dirstr.png" target="_blank"><image width="150" height="300" src="swift/dirstr.png"></image></a>
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+
+
+				<section>
+
+					<h2>Swift Start</h2>
+
+
+					<br>
+
+					<p>/bin/swift-init -> Manager -> Server -> wsgi/daemon </p>
+
+					<pre>#Instantiate Manager, Manager is the class manages each server class, 
+#will initialize every service<code data-trim contenteditable>
+						manager = Manager(servers, run_dir=options.run_dir)
+try:
+    status = manager.run_command(command, **options.__dict__)
+					    </code></pre>
+					
+					<a class="image" href="swift/start.png" target="_blank"><image width="250" height="100" src="swift/start.png"></image></a>
+
+					<ul>
+						<li>On process startup, each server calls its __init__() method to set up internal state from config file and get the server ready to handle requests</li>
+
+						
+
+					</ul>
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+								<section>
+
+					<h2>Swift Start</h2>
+
+
+					<br>
+
+					<p></p>
+
+					
+					<a class="image" href="swift/serverclass.png" target="_blank"><image width="600" height="140" src="swift/serverclass.png"></image></a>
+
+					<a class="image" href="swift/commands.png" target="_blank"><image width="290" height="490" src="swift/commands.png"></image></a>
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+
+				<section>
+
+					<h2>Processe</h2>
+
+
+					<br>
+
+					<ul>
+						<li>Client sends a request to Swift via the bind_port in proxy-server.conf file</li>
+
+						<li>When a request comes to the server, it flows through the WSGI “pipeline” through any middleware to the server’s __call__ method</li>
+
+					</ul>
+					
+					<a class="image" href="swift/request.png" target="_blank"><image width="700" height="480" align="down" src="swift/request.png"></image></a>
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>Filter</h2>
+
+<br>
+
+
+					<ul>
+						<li>When a request comes to the server, it flows through the WSGI “pipeline” through any middleware to the server’s __call__ method</li>
+
+						<li>Configure in proxy-server.conf</li>
+
+					</ul>
+
+					<br>
+<br>
+					<a class="image" href="swift/pipeline.png" target="_blank"><image width="800" height="80" align="down" src="swift/pipeline.png"></image></a>
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+				<section>
+
+					<h2>Processe</h2>
+
+
+					<br>
+
+					
+					<a class="image" href="swift/request.png" target="_blank"><image width="700" height="480" align="down" src="swift/request.png"></image></a>
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+
+				
+				
+
+			<section>
+				<section>
+
+					<h2>API</h2>
+					<ul>
+						<li>RESTful: <br><small>present credential to auth service -> auth service returns a token and url for the account<br> -> use token to access data in the account</small><br>
+							
+							<pre>get token via v3 API using Curl in json format:<code data-trim contenteditable>
+curl -i -H "Content-type:application/json" -d '
+{"auth":{
+  "identity":{
+   "methods":["password"],
+   "password":{
+    "user":{
+     "name":"demo",
+     "domain":{"id":"default"},
+     "password":"thisIsParssword"}}},
+  "scope": {
+    "project": {
+      "name": "demo",
+      "domain": { "id": "default" }
+    }}}}' \
+  http://127.0.0.1:5000/v3/auth/tokens</code></pre>
+</li>
+
+<pre>get object in container:<code data-trim contenteditable>
+curl -i $publicURL/container/object -X GET -H "X-Auth-Token: $token"</code></pre>
+
+
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+					
+				<section>
+
+					<h2>API</h2>
+					<ul>
+						
+
+				<li>Python-Swiftclient<br>
+
+					<pre>upload object to container via auth v2:<code data-trim contenteditable>swift -V 2.0 -A http://****:5000/v2.0 -U demo:demo -K 888888 upload container object</code></pre>
+
+
+									</li>
+
+									<li><a href="http://jclouds.apache.org/guides/openstack/#swift">jclouds</a>: multi-cloud open source library for Java and Clojure
+										<ul>
+										<li>support 30 cloud stacks including Amazon, Azure, OpenStack</li>	
+
+					</ul></li>	
+
+					<li>...</li>
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+			</section>
+
+
+
+				<section>
+
+					<h2>Extending</h2>
+
+
+
+
+					<ul>
+						
+
+<li>Middleware - Python WSGI Middleware:
+	<ul>
+						<li>can be used to “wrap” the request and response of a WSGI application (i.e. proxy-server, account-server, container-server, object-server)
+
+</li>
+<li>Swift uses middleware to add (sometimes optional) behaviors to its WSGI servers</li>
+
+						
+
+					</ul>
+</li>
+
+					<li>ZeroVM - Computing on-disk:
+							<ul>
+						<li> have implemented the integration with Swift
+</li>
+<li>push application to their data instead of pulling data to application</li>	
+
+					</ul>
+</li>	
+
+					<li>...</li></ul>
+					
+					
+					
+					  <aside class="notes">
+							code runs inside of object storage
+					  </aside>
+				</section>
+
+			<section>
+				<section>
+
+					<h2>Installation</h2>
+
+<br>
+
+
+					<ul>
+						<li>As a component installed with OpenStack via packstack or devstack</li>
+<br>
+						<li>Swift All In One (SAIO) for development: <br><a href="http://docs.openstack.org/developer/swift/development_saio.html">official instruction </a> for for setting up a VM that emulate running a four node Swift cluster</li>
+						<br>
+						<li>Standalone Swift Cluster: flexible ways of deployment <br><a href="http://docs.openstack.org/developer/swift/development_saio.html">official instruction </a> for a Multiple Server Swift Installation in Ubuntu</li>
+
+					</ul>
+					
+					
+					
+					  <aside class="notes">
+							
+					  </aside>
+				</section>
+
+					
+			</section>
+
+
+
+			    <section data-markdown>
+    			  <script type="text/template">
+					#Thanks
+
+
+				  </script>
+
+				  <aside class="notes">
+						Oh hey.
+				  </aside>
+			    </section>
+
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+
+				slideNumber: true,
+
+
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
