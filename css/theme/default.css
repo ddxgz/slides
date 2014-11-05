@@ -1,21 +1,21 @@
-@import url(https://fonts.googleapis.com/css?family=News+Cycle:400,700);
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+@import url(googleapisfonts/font1.css);
+@import url(googleapisfonts/font2.css);
 /**
  * Default theme for reveal.js.
  *
  * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
  */
 @font-face {
-  font-family: 'News Cycle';
+  font-family: 'Helvetica Neue';
   font-style: normal;
   font-weight: 400;
-  src: local('News Cycle Regular'), local('NewsCycle-Regular'), url(https://themes.googleusercontent.com/static/fonts/newscycle/v10/9Xe8dq6pQDsPyVH2D3tMQhsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+  src: local('Helvetica'), local('Helvetica'), url(woff/9Xe8dq6pQDsPyVH2D3tMQhsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
 }
 @font-face {
-  font-family: 'News Cycle';
+  font-family: 'Helvetica';
   font-style: normal;
   font-weight: 700;
-  src: local('News Cycle Bold'), local('NewsCycle-Bold'), url(https://themes.googleusercontent.com/static/fonts/newscycle/v10/G28Ny31cr5orMqEQy6ljtwFhaRv2pGgT5Kf0An0s4MM.woff) format('woff');
+  src: local('Helvetica'), local('Helvetica'), url(woff/G28Ny31cr5orMqEQy6ljtwFhaRv2pGgT5Kf0An0s4MM.woff) format('woff');
 }
 
 /*********************************************
@@ -32,10 +32,10 @@ body {
   background-color: #2b2b2b; }
 
 .reveal {
-  font-family: "News Cycle", sans-serif;
-  font-size: 36px;
-  font-weight: normal;
-  letter-spacing: -0.02em;
+  font-family: "Helvetica", sans-serif;
+  font-size: 30px;
+  font-weight: lighter;
+  letter-spacing: 0.0em;
   color: #eeeeee; }
 
 ::selection {
@@ -54,7 +54,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #eeeeee;
-  font-family: "News Cycle", Impact, sans-serif;
+  font-family: "Helvetica", Impact, sans-serif;
   line-height: 0.9em;
   letter-spacing: 0.02em;
   /*
